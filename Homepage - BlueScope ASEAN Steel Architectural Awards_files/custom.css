@@ -306,18 +306,33 @@ section[style*="background-color: #F6F6F6"] {
    INDONESIA DESIGN NAVBAR — exact match indonesiadesign.com
    ============================================================ */
 
-/* ── Fix FontAwesome @font-face: style(1).css overrides CDN with broken local paths.
-      Re-declare last (custom.css loads last) so CDN URLs win. ── */
-@font-face {
-  font-family: "FontAwesome";
-  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?v=4.7.0');
-  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
-       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
-       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
-       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
-       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
+/* ── Fix heroes-prev / heroes-next arrows: replace FontAwesome ::before
+      (broken local font) with pure CSS chevrons — zero font dependency ── */
+.heroes .heroes-prev,
+.heroes .heroes-next {
+  font-size: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.heroes .heroes-prev::before,
+.heroes .heroes-next::before {
+  content: "" !important;
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-top: 3px solid currentColor !important;
+  border-right: 3px solid currentColor !important;
+  flex-shrink: 0 !important;
+}
+
+.heroes .heroes-prev::before {
+  transform: rotate(-135deg) translateX(3px) !important;
+}
+
+.heroes .heroes-next::before {
+  transform: rotate(45deg) translateX(-3px) !important;
 }
 
 /* ── Fix padding-top: theme added offset for old fixed header ── */
