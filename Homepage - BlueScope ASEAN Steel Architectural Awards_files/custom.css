@@ -306,6 +306,9 @@ section[style*="background-color: #F6F6F6"] {
    INDONESIA DESIGN NAVBAR — exact match indonesiadesign.com
    ============================================================ */
 
+/* ── Fix: theme sets #__next { overflow: hidden } which breaks sticky ── */
+#__next { overflow: visible !important; }
+
 /* ── Header wrapper ── */
 .id-header {
   top: 0;
