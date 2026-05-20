@@ -306,6 +306,20 @@ section[style*="background-color: #F6F6F6"] {
    INDONESIA DESIGN NAVBAR — exact match indonesiadesign.com
    ============================================================ */
 
+/* ── Fix FontAwesome @font-face: style(1).css overrides CDN with broken local paths.
+      Re-declare last (custom.css loads last) so CDN URLs win. ── */
+@font-face {
+  font-family: "FontAwesome";
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+       url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* ── Fix padding-top: theme added offset for old fixed header ── */
 .main-wrapper,
 .themes-2026 .main-wrapper { padding-top: 0 !important; }
