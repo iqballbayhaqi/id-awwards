@@ -1,0 +1,399 @@
+(function( $ ) {
+	'use strict';
+    Dropzone.autoDiscover = false;
+    $("div#dropzone-init").dropzone({ 
+        url: dropzone_package._ajax_url_dropzone,
+        method: "post",
+        uploadMultiple: false,
+        params: {
+            action : "_POST_dropzone",
+            _ajax_nonce : dropzone_package._ajax_nonce_dropzone
+        },
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        success(file, response) {
+            console.log(response)
+            var addsection = `<input id="attachment_id_${response.data.attachment_id}" type="hidden" name="file[]" value="${response.data.attachment_id}">`
+            $('#collection_upload').append(addsection)
+
+        },
+        removedfile(file) {
+            console.log(file);
+
+            // Only update the frontend state; do not call the remove API.
+            // Determine attachment ID for both freshly uploaded and preloaded files.
+            let attachmentId = null;
+
+            // Preloaded files from server have attachment_id set manually.
+            if (file.attachment_id) {
+                attachmentId = file.attachment_id;
+            }
+            // Freshly uploaded files have the ID in the xhr response.
+            else if (file.status === "success" && file.xhr && file.xhr.response) {
+                try {
+                    var dataImage = JSON.parse(file.xhr.response);
+                    if (dataImage && dataImage.data && dataImage.data.attachment_id) {
+                        attachmentId = dataImage.data.attachment_id;
+                    }
+                } catch (e) {
+                    console.error('Failed to parse Dropzone remove response (frontend only)', e);
+                }
+            }
+
+            // Remove the corresponding hidden input so the file won't be resubmitted.
+            if (attachmentId) {
+                $(`#attachment_id_${attachmentId}`).remove();
+            }
+
+            // Remove the preview element from Dropzone.
+            if (file.previewElement != null && file.previewElement.parentNode != null) {
+              file.previewElement.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+        },
+        error(file, message) {
+            if (file.previewElement) {
+            file.previewElement.classList.add("dz-error");
+
+            console.log(message)
+            if (typeof message !== "string" && message.success == false) {
+                message = message.data.error;
+            }
+            for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+            )) {
+                node.textContent = message;
+            }
+            }
+        },
+    });
+
+
+    // technical_drawings
+    $("div#dropzone-init-technical").dropzone({ 
+        url: dropzone_package._ajax_url_dropzone,
+        method: "post",
+        uploadMultiple: false,
+        params: {
+            action : "_POST_dropzone",
+            _ajax_nonce : dropzone_package._ajax_nonce_dropzone
+        },
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        success(file, response) {
+            console.log(response)
+            var addsection = `<input id="attachment_id_${response.data.attachment_id}" type="hidden" name="technical_drawings[]" value="${response.data.attachment_id}">`
+            $('#collection_upload_technical').append(addsection)
+
+        },
+        removedfile(file) {
+            console.log(file)
+
+            // if(file.status == "success") {
+            //     console.log( JSON.parse(file.xhr.response))
+
+            //     var dataImage = JSON.parse(file.xhr.response)
+
+            //     $.ajax({
+            //         url: dropzone_package._ajax_url_dropzone,
+            //         type: "POST",
+            //         dataType: "json",
+            //         data: {
+            //             action : "_POST_remove_file",
+            //             _ajax_nonce : dropzone_package._ajax_nonce_dropzone,
+            //             attachment_id: dataImage.data.attachment_id
+            //         },
+            //         success: function(result) {
+            //             $(`#attachment_id_${dataImage.data.attachment_id}`).remove()
+            //         }
+
+            //     })
+            // }
+            
+
+            if (file.previewElement != null && file.previewElement.parentNode != null) {
+              file.previewElement.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+        },
+        error(file, message) {
+            if (file.previewElement) {
+            file.previewElement.classList.add("dz-error");
+
+            console.log(message)
+            if (typeof message !== "string" && message.success == false) {
+                message = message.data.error;
+            }
+            for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+            )) {
+                node.textContent = message;
+            }
+            }
+        },
+    });
+
+    // supporting_documents
+    $("div#dropzone-init-supporting").dropzone({ 
+        url: dropzone_package._ajax_url_dropzone,
+        method: "post",
+        uploadMultiple: false,
+        params: {
+            action : "_POST_dropzone",
+            _ajax_nonce : dropzone_package._ajax_nonce_dropzone
+        },
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        success(file, response) {
+            console.log(response)
+            var addsection = `<input id="attachment_id_${response.data.attachment_id}" type="hidden" name="supporting_documents[]" value="${response.data.attachment_id}">`
+            $('#collection_upload_supporting').append(addsection)
+
+        },
+        removedfile(file) {
+            console.log(file)
+
+            if(file.status == "success") {
+                console.log( JSON.parse(file.xhr.response))
+
+                var dataImage = JSON.parse(file.xhr.response)
+
+                $.ajax({
+                    url: dropzone_package._ajax_url_dropzone,
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        action : "_POST_remove_file",
+                        _ajax_nonce : dropzone_package._ajax_nonce_dropzone,
+                        attachment_id: dataImage.data.attachment_id
+                    },
+                    success: function(result) {
+                        $(`#attachment_id_${dataImage.data.attachment_id}`).remove()
+                    }
+
+                })
+            }
+            
+
+            if (file.previewElement != null && file.previewElement.parentNode != null) {
+              file.previewElement.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+        },
+        error(file, message) {
+            if (file.previewElement) {
+            file.previewElement.classList.add("dz-error");
+
+            console.log(message)
+            if (typeof message !== "string" && message.success == false) {
+                message = message.data.error;
+            }
+            for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+            )) {
+                node.textContent = message;
+            }
+            }
+        },
+    });
+
+    // participant_and_work_data
+    $("div#dropzone-init-form1").dropzone({ 
+        url: dropzone_package._ajax_url_dropzone,
+        method: "post",
+        uploadMultiple: false,
+        params: {
+            action : "_POST_dropzone",
+            _ajax_nonce : dropzone_package._ajax_nonce_dropzone
+        },
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        success(file, response) {
+            console.log(response)
+            var addsection = `<input id="attachment_id_${response.data.attachment_id}" type="hidden" name="participant_and_work_data[]" value="${response.data.attachment_id}">`
+            $('#collection_upload_form1').append(addsection)
+
+        },
+        removedfile(file) {
+            console.log(file)
+
+            if(file.status == "success") {
+                console.log( JSON.parse(file.xhr.response))
+
+                var dataImage = JSON.parse(file.xhr.response)
+
+                $.ajax({
+                    url: dropzone_package._ajax_url_dropzone,
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        action : "_POST_remove_file",
+                        _ajax_nonce : dropzone_package._ajax_nonce_dropzone,
+                        attachment_id: dataImage.data.attachment_id
+                    },
+                    success: function(result) {
+                        $(`#attachment_id_${dataImage.data.attachment_id}`).remove()
+                    }
+
+                })
+            }
+            
+
+            if (file.previewElement != null && file.previewElement.parentNode != null) {
+              file.previewElement.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+        },
+        error(file, message) {
+            if (file.previewElement) {
+            file.previewElement.classList.add("dz-error");
+
+            console.log(message)
+            if (typeof message !== "string" && message.success == false) {
+                message = message.data.error;
+            }
+            for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+            )) {
+                node.textContent = message;
+            }
+            }
+        },
+    });
+
+    // project_summary
+    $("div#dropzone-init-form2").dropzone({ 
+        url: dropzone_package._ajax_url_dropzone,
+        method: "post",
+        uploadMultiple: false,
+        params: {
+            action : "_POST_dropzone",
+            _ajax_nonce : dropzone_package._ajax_nonce_dropzone
+        },
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        success(file, response) {
+            console.log(response)
+            var addsection = `<input id="attachment_id_${response.data.attachment_id}" type="hidden" name="project_summary[]" value="${response.data.attachment_id}">`
+            $('#collection_upload_form2').append(addsection)
+
+        },
+        removedfile(file) {
+            console.log(file)
+
+            if(file.status == "success") {
+                console.log( JSON.parse(file.xhr.response))
+
+                var dataImage = JSON.parse(file.xhr.response)
+
+                $.ajax({
+                    url: dropzone_package._ajax_url_dropzone,
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        action : "_POST_remove_file",
+                        _ajax_nonce : dropzone_package._ajax_nonce_dropzone,
+                        attachment_id: dataImage.data.attachment_id
+                    },
+                    success: function(result) {
+                        $(`#attachment_id_${dataImage.data.attachment_id}`).remove()
+                    }
+
+                })
+            }
+            
+
+            if (file.previewElement != null && file.previewElement.parentNode != null) {
+              file.previewElement.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+        },
+        error(file, message) {
+            if (file.previewElement) {
+            file.previewElement.classList.add("dz-error");
+
+            console.log(message)
+            if (typeof message !== "string" && message.success == false) {
+                message = message.data.error;
+            }
+            for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+            )) {
+                node.textContent = message;
+            }
+            }
+        },
+    });
+
+    // statement_letter
+    $("div#dropzone-init-form3").dropzone({ 
+        url: dropzone_package._ajax_url_dropzone,
+        method: "post",
+        uploadMultiple: false,
+        params: {
+            action : "_POST_dropzone",
+            _ajax_nonce : dropzone_package._ajax_nonce_dropzone
+        },
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        acceptedFiles: "image/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        success(file, response) {
+            console.log(response)
+            var addsection = `<input id="attachment_id_${response.data.attachment_id}" type="hidden" name="statement_letter[]" value="${response.data.attachment_id}">`
+            $('#collection_upload_form3').append(addsection)
+
+        },
+        removedfile(file) {
+            console.log(file)
+
+            if(file.status == "success") {
+                console.log( JSON.parse(file.xhr.response))
+
+                var dataImage = JSON.parse(file.xhr.response)
+
+                $.ajax({
+                    url: dropzone_package._ajax_url_dropzone,
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        action : "_POST_remove_file",
+                        _ajax_nonce : dropzone_package._ajax_nonce_dropzone,
+                        attachment_id: dataImage.data.attachment_id
+                    },
+                    success: function(result) {
+                        $(`#attachment_id_${dataImage.data.attachment_id}`).remove()
+                    }
+
+                })
+            }
+            
+
+            if (file.previewElement != null && file.previewElement.parentNode != null) {
+              file.previewElement.parentNode.removeChild(file.previewElement);
+            }
+            return this._updateMaxFilesReachedClass();
+        },
+        error(file, message) {
+            if (file.previewElement) {
+            file.previewElement.classList.add("dz-error");
+
+            console.log(message)
+            if (typeof message !== "string" && message.success == false) {
+                message = message.data.error;
+            }
+            for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+            )) {
+                node.textContent = message;
+            }
+            }
+        },
+    });
+
+
+})( jQuery );

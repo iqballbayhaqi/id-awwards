@@ -1,0 +1,551 @@
+
+/* ============================================================
+   INDONESIA DESIGN STYLE OVERRIDE
+   Referensi: indonesiadesign.com
+   Font    : Jost (Century Gothic equivalent, geometric sans-serif)
+   Colors  : Maroon #7B1A1A | Yellow #E8C14A | White #fff | Black #1a1a1a
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+/* ── CSS Variables Override ── */
+:root {
+  --brand:        #7B1A1A;   /* Maroon – warna kotak logo "Indonesia" */
+  --brand-yellow: #E8C14A;   /* Kuning – warna teks "Indonesia" di logo */
+  --brand-red:    #CC0000;   /* Titik merah pada huruf 'i' di logo */
+  --choco:        #E8C14A;   /* Aksen kuning menggantikan warna coklat */
+  --black-def:    #1a1a1a;
+  --black-01:     #4c4c4c;
+  --light:        #ffffff;
+  --grey-01:      #b2b2b2;
+  --grey-02:      #e8e8e8;
+  --mon:          "Jost", "Century Gothic", "Trebuchet MS", sans-serif;
+}
+
+/* ── Global Typography ── */
+*,
+body,
+.themes-2026 {
+  font-family: var(--mon) !important;
+  letter-spacing: 0.01em;
+}
+
+.h1, .h2, .h3, .h4, .h5,
+h1, h2, h3, h4, h5 {
+  font-family: var(--mon) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+}
+
+/* ── Navigation Header ── */
+.themes-2026 .header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.themes-2026 .header .navbar {
+  background-color: #ffffff;
+}
+
+.themes-2026 .header .navbar .nav-link {
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black-def) !important;
+}
+
+.themes-2026 .header .navbar .nav-link:hover {
+  color: var(--brand) !important;
+}
+
+/* ── Logo & Brand ── */
+.themes-2026 .header .navbar .navbar-brand a img {
+  height: 48px;
+}
+
+/* ── CTA / Login Button ── */
+.themes-2026 .header .navbar .navbar-action .action-login a {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+  color: #ffffff !important;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  transition: background-color 0.2s;
+}
+
+.themes-2026 .header .navbar .navbar-action .action-login a:hover {
+  background-color: #5a1010 !important;
+  border-color: #5a1010 !important;
+}
+
+/* ── Gold / Primary Button (btn-gold) ── */
+.btn-gold {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+  color: #ffffff !important;
+  font-family: var(--mon) !important;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-gold:hover,
+.btn-gold:focus {
+  background-color: #5a1010 !important;
+  border-color: #5a1010 !important;
+  color: #ffffff !important;
+}
+
+/* ── Primary Button (btn-primary) ── */
+.btn-primary {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #5a1010 !important;
+  border-color: #5a1010 !important;
+}
+
+/* ── Section Titles (c-title) ── */
+.c-title {
+  color: var(--brand) !important;
+  font-family: var(--mon) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.c-title--with-bg {
+  background-color: var(--brand) !important;
+  color: #ffffff !important;
+}
+
+/* ── Submission / Dark CTA Section ── */
+.submission {
+  background-color: var(--brand);
+}
+
+.submission a {
+  color: var(--brand-yellow) !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Prizes Section ── */
+.prizes {
+  background-color: var(--brand) !important;
+}
+
+/* ── Body / Main Background ── */
+body,
+.main-wrapper {
+  background-color: #ffffff;
+  color: var(--black-def);
+}
+
+/* ── Cards ── */
+.card-category .card-wrp,
+.card-judging .card-wrp,
+.card-winner .card-wrp {
+  border: 1px solid var(--grey-02);
+  background-color: #ffffff;
+}
+
+.card-category .card-info span,
+.card-judging .card-info span {
+  color: var(--brand) !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+/* ── Accordion (FAQ) ── */
+.accordion-button:not(.collapsed) {
+  background-color: var(--brand) !important;
+  color: #ffffff !important;
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.2rem rgba(123, 26, 26, 0.25) !important;
+}
+
+.accordion-button::after {
+  filter: none;
+}
+
+.accordion-button:not(.collapsed)::after {
+  filter: brightness(10);
+}
+
+/* ── Swiper Navigation Buttons ── */
+.swp-btn-prev,
+.swp-btn-next {
+  background-color: var(--brand) !important;
+  color: #ffffff !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--brand) !important;
+}
+
+/* ── Footer ── */
+.main-footer {
+  background-color: var(--brand) !important;
+  color: #ffffff !important;
+}
+
+.main-footer a {
+  color: var(--brand-yellow) !important;
+}
+
+.main-footer a:hover {
+  color: #ffffff !important;
+}
+
+.main-footer .footer-sosmed .sosmed ul li a i {
+  background-color: rgba(255,255,255,0.15) !important;
+}
+
+.main-footer .nav-links ul li a {
+  color: rgba(255,255,255,0.8) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── Form Inputs ── */
+.form-control:focus {
+  border-color: var(--brand) !important;
+  box-shadow: 0 0 0 0.2rem rgba(123, 26, 26, 0.2) !important;
+}
+
+.form-label span {
+  color: var(--brand) !important;
+}
+
+/* ── Modal headings ── */
+.modal-content h2 {
+  color: var(--brand) !important;
+}
+
+/* ── Loading Spinner ── */
+.lds-default div {
+  background-color: var(--brand) !important;
+}
+
+/* ── Heroes / Banner Section ── */
+.heroes-wrp .heroes-content h2 {
+  font-family: var(--mon) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Dropdown Menu ── */
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--brand) !important;
+  color: #ffffff !important;
+}
+
+/* ── Section alternating background ── */
+.winners[style*="#F6F6F6"],
+section[style*="background-color: #F6F6F6"] {
+  background-color: #f6f6f6 !important;
+}
+
+/* ── Navigation Language Selector ── */
+.themes-2026 .header .navbar .navbar-action .navbar-lang .lang {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Sponsor Section ── */
+.sponsor h2 {
+  color: var(--brand) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Select2 override (Registration form) ── */
+#registerForm .select2-results__option {
+  color: var(--black-01) !important;
+  font-family: var(--mon) !important;
+}
+
+#registerForm .select2-selection__rendered {
+  color: var(--black-01) !important;
+  font-family: var(--mon) !important;
+}
+
+#registerForm .select2-results__option--highlighted {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  border-bottom: 1px solid var(--brand) !important;
+}
+
+/* ============================================================
+   INDONESIA DESIGN NAVBAR — exact match indonesiadesign.com
+   ============================================================ */
+
+/* ── Header wrapper ── */
+.id-header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  position: sticky;
+  background-color: rgba(255, 255, 255, 0.97);
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),
+              0px 4px 5px  0px rgba(0,0,0,0.14),
+              0px 1px 10px 0px rgba(0,0,0,0.12);
+  transition: top 0.2s ease-in-out;
+}
+
+/* ── Inner container ── */
+.id-inner {
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+}
+
+/* ── Logo: absolutely centered ── */
+.id-logo-abs {
+  width: 100%;
+  height: 75px;
+  margin: 0;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.id-logo-link {
+  pointer-events: all;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  outline: none;
+  background-color: transparent;
+}
+
+.id-logo-img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+/* ── Header bar: left/right with space-between ── */
+.id-hbar {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Left: hamburger + search ── */
+.id-hbar-left {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  max-height: 40px;
+  text-align: center;
+}
+
+.id-hbtn {
+  border: 0;
+  cursor: pointer;
+  padding: 0 24px 0 0;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  outline: none;
+  position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.id-ico-menu   { width: 20px; height: 20px; }
+.id-ico-search { width: 24px; height: 24px; }
+
+/* ── Right: subscribe section ── */
+.id-hbar-right {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  max-height: 40px;
+  text-align: center;
+}
+
+.id-sub-link {
+  color: inherit;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  outline: none;
+  padding: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  border-radius: 0;
+  justify-content: center;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.id-sub-txt {
+  display: flex;
+  text-align: right;
+  margin-left: 16px;
+  margin-right: 16px;
+  flex-direction: column;
+}
+
+.id-sub-top {
+  color: #000000;
+  margin: 0;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: "Helvetica", "Arial", sans-serif;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+}
+
+.id-sub-btm {
+  color: #000000;
+  margin: 0;
+  font-size: 10px;
+  font-style: italic;
+  font-weight: 500;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 0;
+  text-transform: inherit;
+  letter-spacing: 2px;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+}
+
+.id-sub-cover {
+  height: 70px;
+  display: flex;
+  align-items: flex-start;
+  overflow: visible;
+}
+
+.id-sub-img {
+  height: 70px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* ── Category nav ── */
+.id-navbar {
+  padding: 16px;
+  text-align: center;
+  background-color: transparent;
+}
+
+.id-nav-link {
+  color: inherit;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  outline: none;
+  padding: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  border-radius: 0;
+  justify-content: center;
+  text-decoration: none !important;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.id-nav-link:hover { text-decoration: none; }
+
+.id-nav-span {
+  padding: 0 30px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: "Helvetica", "Arial", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #000000;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* ── Mobile ≤ 768px ── */
+@media (max-width: 768px) {
+  .id-navbar {
+    display: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  .id-navbar.id-nav-open {
+    display: block;
+    padding-bottom: 8px;
+    border-top: 1px solid #ebebeb;
+  }
+
+  .id-nav-link { display: block; }
+
+  .id-nav-span {
+    padding: 13px 24px;
+    display: block;
+    font-size: 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .id-hbar { height: 60px; }
+  .id-logo-abs { height: 60px; }
+  .id-logo-img { height: 38px; }
+  .id-sub-txt { display: none; }
+  .id-sub-cover { height: 50px; }
+  .id-sub-img { height: 50px; }
+}
+
+@media (max-width: 480px) {
+  .id-hbar-right { display: none; }
+  .id-inner { padding: 0 4px; }
+}

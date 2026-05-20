@@ -1,0 +1,402 @@
+( function( $ ) {
+
+    // //swiper criteria
+    // var swpCriteria;
+
+    // function swCritera() {
+    //     swpCriteria = new Swiper(".swp-criteria .swiper", {
+    //         spaceBetween: 16,
+    //         slidesPerView: 1,
+    //         loop: false,
+    //         centeredSlides: false,
+    //         watchOverflow: true,
+    //         navigation: {
+    //             nextEl: ".swp-criteria .swp-btn-next",
+    //             prevEl: ".swp-criteria .swp-btn-prev"
+    //         },
+    //         breakpoints: {
+    //             576: {
+    //                 spaceBetween: 24,
+    //                 slidesPerView: 1,
+    //             },
+    //             768: {
+    //                 spaceBetween: 16,
+    //                 slidesPerView: 2,
+    //             },
+    //             992: {
+    //                 spaceBetween: 24,
+    //                 slidesPerView: 2,
+    //             },
+    //             1200: {
+    //                 spaceBetween: 32,
+    //                 slidesPerView: 3,
+    //             },
+    //         }
+    //     });
+    // }
+
+    function heroesSwiper() {
+        var heroesSlider = document.querySelectorAll('.heroes-wrp');
+        if(heroesSlider.length > 1) {
+            var heroesSwiper = new Swiper('.heroes .swiper', {
+                spaceBetween: 0,
+                loop: true,
+                watchOverflow: true,
+                autoplay: {
+                    delay: 4000,
+                },
+                speed: 500,
+                navigation: {
+                    nextEl: '.heroes .heroes-next',
+                    prevEl: '.heroes .heroes-prev',
+                },
+                pagination: {
+                    el: ".heroes .heroes-swiper-pagination",
+                    clickable: true,
+                },
+                on: {
+                    beforeInit() {
+                        const slides = this.el.querySelectorAll('.swiper-slide');
+
+                        if (slides) {
+                            this.params.loop = slides.length > 1;
+                            this.params.autoplay.enabled = slides.length > 1;
+                        }
+                    },
+                },
+            });
+        }else {
+            $('.heroes').addClass('swiper-off');
+        }
+    }
+
+    //swiper full width
+    function swiperCarousel() {
+
+        const swSwiper      = document.querySelectorAll('.swp-full-width .swiper');
+        const pgSwiper      = document.querySelectorAll('.swp-full-width .swp-bullet-pagination');
+        const prevSwiper    = document.querySelectorAll('.swp-full-width .swp-btn-prev');
+        const nextSwiper    = document.querySelectorAll('.swp-full-width .swp-btn-next');
+
+        if(swSwiper.length > 1) {
+
+            for(i = 0; i < swSwiper.length; i++) {
+
+                swSwiper[i].classList.add('swiper-'+ i);
+                pgSwiper[i].classList.add('swiper-pg-'+ i);
+                prevSwiper[i].classList.add('swiper-prev-'+ i);
+                nextSwiper[i].classList.add('swiper-next-'+ i);
+
+                new Swiper(".swp-full-width .swiper-"+ i, {
+                    spaceBetween: 16,
+                    slidesPerView: 1,
+                    loop: false,
+                    centeredSlides: false,
+                    watchOverflow: true,
+                    navigation: {
+                        nextEl: ".swp-full-width .swiper-next-"+ i,
+                        prevEl: ".swp-full-width .swiper-prev-"+ i
+                    },
+                    pagination: {
+                        el: ".swp-full-width .swiper-pg-"+ i,
+                        dynamicBullets: true,
+                        clickable: true
+                    }
+                });
+            }
+        }else {
+
+            new Swiper(".swp-full-width .swiper", {
+                spaceBetween: 16,
+                slidesPerView: 1,
+                loop: false,
+                centeredSlides: false,
+                watchOverflow: true,
+                navigation: {
+                    nextEl: ".swp-full-width .swp-btn-next",
+                    prevEl: ".swp-full-width .swp-btn-prev"
+                },
+                pagination: {
+                    el: ".swp-full-width .swp-bullet-pagination",
+                    dynamicBullets: true,
+                    clickable: true
+                }
+            });
+        }
+    }
+
+    //swiper judges
+    function swJudges() {
+        if (!document.querySelector(".swp-judges .swiper")) return;
+        var swpJudges = new Swiper(".swp-judges .swiper", {
+            spaceBetween: 16,
+            slidesPerView: 1,
+            loop: false,
+            centeredSlides: false,
+            watchOverflow: true,
+            navigation: {
+                nextEl: ".swp-judges .swp-btn-next",
+                prevEl: ".swp-judges .swp-btn-prev"
+            },
+            pagination: {
+                el: ".swp-judges .swp-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                576: {
+                    spaceBetween: 24,
+                    slidesPerView: 2,
+                },
+                768: {
+                    spaceBetween: 32,
+                    slidesPerView: 2,
+                },
+                992: {
+                    spaceBetween: 16,
+                    slidesPerView: 3,
+                },
+                1200: {
+                    spaceBetween: 32,
+                    slidesPerView: 3,
+                },
+            }
+        });
+    }
+
+    //swiper judges
+    function swWinners() {
+        var swpWinner = new Swiper(".swp-the-winners .swiper", {
+            spaceBetween: 16,
+            slidesPerView: 1,
+            loop: false,
+            centeredSlides: false,
+            watchOverflow: true,
+            navigation: {
+                nextEl: ".swp-the-winners .swp-btn-next",
+                prevEl: ".swp-the-winners .swp-btn-prev"
+            },
+            pagination: {
+                el: ".swp-the-winners .swp-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                576: {
+                    spaceBetween: 24,
+                    slidesPerView: 2,
+                },
+                768: {
+                    spaceBetween: 32,
+                    slidesPerView: 2,
+                },
+                992: {
+                    spaceBetween: 16,
+                    slidesPerView: 3,
+                },
+                1200: {
+                    spaceBetween: 32,
+                    slidesPerView: 3,
+                },
+            }
+        });
+    }
+
+    //swiper winners
+    function swBehind() {
+        var swpWinner = new Swiper(".swp-behind-stories .swiper", {
+            spaceBetween: 16,
+            slidesPerView: 1,
+            loop: false,
+            centeredSlides: false,
+            watchOverflow: true,
+            navigation: {
+                nextEl: ".swp-behind-stories .swp-btn-next",
+                prevEl: ".swp-behind-stories .swp-btn-prev"
+            },
+            pagination: {
+                el: ".swp-behind-stories .swp-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                576: {
+                    spaceBetween: 24,
+                    slidesPerView: 2,
+                },
+                768: {
+                    spaceBetween: 32,
+                    slidesPerView: 2,
+                },
+                992: {
+                    spaceBetween: 16,
+                    slidesPerView: 3,
+                },
+                1200: {
+                    spaceBetween: 32,
+                    slidesPerView: 3,
+                },
+            }
+        });
+    }
+
+    //swiper saa asean
+    function swSaaAsean() {
+        var swpWinner = new Swiper(".swp-saa-asean .swiper", {
+            spaceBetween: 16,
+            slidesPerView: 1,
+            loop: false,
+            centeredSlides: false,
+            watchOverflow: true,
+            navigation: {
+                nextEl: ".swp-saa-asean .swp-btn-next",
+                prevEl: ".swp-saa-asean .swp-btn-prev"
+            },
+            pagination: {
+                el: ".swp-saa-asean .swp-pagination",
+                clickable: true,
+            },
+            breakpoints: {
+                576: {
+                    spaceBetween: 24,
+                    slidesPerView: 2,
+                },
+                768: {
+                    spaceBetween: 32,
+                    slidesPerView: 2,
+                },
+                992: {
+                    spaceBetween: 16,
+                    slidesPerView: 3,
+                },
+                1200: {
+                    spaceBetween: 32,
+                    slidesPerView: 3,
+                },
+            }
+        });
+    }
+
+    //swiper carousel
+    var swpSwiper;
+            
+    function theSwiper() {
+
+        const swSwiper      = document.querySelectorAll('.swp-carousel .swiper');
+        const pgSwiper      = document.querySelectorAll('.swp-carousel .swp-pagination');
+        const prevSwiper    = document.querySelectorAll('.swp-carousel .swp-btn-prev');
+        const nextSwiper    = document.querySelectorAll('.swp-carousel .swp-btn-next');
+
+        if(swSwiper.length > 1) {
+
+            for(i = 0; i < swSwiper.length; i++) {
+
+                swSwiper[i].classList.add('swiper-'+ i);
+                pgSwiper[i].classList.add('swiper-pg-'+ i);
+                prevSwiper[i].classList.add('swiper-prev-'+ i);
+                nextSwiper[i].classList.add('swiper-next-'+ i);
+
+                swpSwiper = new Swiper(".swp-carousel .swiper-"+ i, {
+                    spaceBetween: 16,
+                    slidesPerView: 'auto',
+                    loop: false,
+                    centeredSlides: false,
+                    watchOverflow: true,
+                    breakpoints: {
+                        576: {
+                            spaceBetween: 24,
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            spaceBetween: 32,
+                            slidesPerView: 2,
+                        },
+                        992: {
+                            spaceBetween: 16,
+                            slidesPerView: 3,
+                        },
+                        1200: {
+                            spaceBetween: 32,
+                            slidesPerView: 3,
+                        },
+                    },
+                    navigation: {
+                        nextEl: ".swp-carousel .swiper-next-"+ i,
+                        prevEl: ".swp-carousel .swiper-prev-"+ i
+                    },
+                    pagination: {
+                        el: ".swp-carousel .swiper-pg-"+ i,
+                        dynamicBullets: true,
+                        clickable: true,
+                    }
+                });
+            }
+        }else {
+
+            swpSwiper = new Swiper(".swp-carousel .swiper", {
+                spaceBetween: 16,
+                slidesPerView: 'auto',
+                loop: false,
+                centeredSlides: false,
+                watchOverflow: true,
+                navigation: {
+                    nextEl: ".swp-carousel .swp-btn-next",
+                    prevEl: ".swp-carousel .swp-btn-prev"
+                },
+                pagination: {
+                    el: ".swp-carousel .swp-pagination",
+                    dynamicBullets: true,
+                    clickable: true,
+                },
+                breakpoints: {
+                    576: {
+                        spaceBetween: 24,
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        spaceBetween: 32,
+                        slidesPerView: 2,
+                    },
+                    992: {
+                        spaceBetween: 16,
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        spaceBetween: 32,
+                        slidesPerView: 3,
+                    },
+                }
+            });
+        }
+    }
+    
+
+    jQuery(document).ready(function($) {
+        heroesSwiper();
+        swJudges();
+        swWinners();
+        swBehind();
+        swSaaAsean();
+
+    });
+    
+    $(".datepicker").datepicker({
+        format: "dd/mm/yyyy",
+    });
+
+
+
+
+    var searchTerm, panelContainerId;
+    // Create a new contains that is case insensitive
+    $.expr[':'].containsCaseInsensitive = function (n, i, m) {
+    return jQuery(n).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+    };
+
+    $('#accordion_search_bar').on('change keyup paste click', function () {
+        searchTerm = $(this).val();
+        $('#accordion > .panel').each(function () {
+          panelContainerId = '#' + $(this).attr('id');
+          $(panelContainerId + ':not(:containsCaseInsensitive(' + searchTerm + '))').hide();
+          $(panelContainerId + ':containsCaseInsensitive(' + searchTerm + ')').show();
+        });
+    });
+
+}( jQuery ) );

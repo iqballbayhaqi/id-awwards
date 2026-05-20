@@ -1,0 +1,670 @@
+( function( $ ) {
+ 
+    const language = ajax_auth_object.lang || 'en';
+
+    function loginHandler() {
+        console.log('Login handler initialized', language);
+
+        $('#loginForm').submit(function(e) {
+            e.preventDefault();
+            const email = $('#email_login').val();
+            const password = $('#password_login').val();
+            console.log('Form submitted with:', { email, password });
+
+            const data = {
+                action: 'ajax_login',
+                email: email,
+                password: password,
+                security: ajax_auth_object.nonce
+            };
+            $.ajax({
+                type: 'POST',
+                url: ajax_auth_object.ajaxurl,
+                data: data,
+                beforeSend: function() {
+                    $('#signButton').prop('disabled', true);
+                    $('#signButton').text('Signing in...');
+                },
+                success: function(response) {
+                    console.log('Login response:', response);
+
+                    // Expecting response format:
+                    // { "success": true, "data": { "redirect": "https://colorbond-aw-dev.com" } }
+                    try {
+                        const success = response && (response.success === true || response.success === 'true');
+                        const redirectUrl = response && response.data && response.data.redirect;
+
+                        if (success && redirectUrl) {
+                            window.location.href = redirectUrl;
+                            return;
+                        } else {
+                            // Kalau success = false, tampilkan Swal error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Login gagal',
+                                text: 'Email atau password salah.'
+                            });
+                        }
+                    } catch (err) {
+                        console.error('Error handling login response:', err);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Login error:', error);
+                }
+            }).done(function() {
+                $('#signButton').prop('disabled', false);
+                $('#signButton').text('Sign In');
+            });
+           
+        });
+    }
+
+    function logoutHandler() {
+        $('.colorbond-logout-link').on('click', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: ajax_auth_object.ajaxurl,
+                data: {
+                    action: 'ajax_logout',
+                    security: ajax_auth_object.nonce
+                },
+                success: function(response) {
+                    console.log('Logout response:', response);
+
+                    try {
+                        const success = response && (response.success === true || response.success === 'true');
+                        const redirectUrl = response && response.data && response.data.redirect;
+
+                        if (success && redirectUrl) {
+                            window.location.href = redirectUrl;
+                            return;
+                        }
+                    } catch (err) {
+                        console.error('Error handling logout response:', err);
+                    }
+
+                    // Fallback: reload current page
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Logout error:', error);
+                }
+            });
+        });
+    }
+
+    function registerHandler() {
+        console.log('Register handler initialized');
+
+        $('#registerForm').validate({
+            rules: {
+                fullname: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                pwd: {
+                    required: true,
+                    minlength: 6
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: "#pwd"
+                },
+                phone: {
+                    required: true,
+                    digits: true,
+                    minlength: 10
+                },
+                role: {
+                    required: true,
+                },
+
+                term_privacy : "required",
+			    
+                declare : "required"
+                
+            },
+            messages: {
+                fullname: "Please enter your full name",
+
+                email: {
+                    required: "Please enter your email address",
+                    email: "Please enter a valid email address"
+                },
+                pwd: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 6 characters long"
+                },
+                confirm_password: {
+                    required: "Please confirm your password",
+                    equalTo: "Passwords do not match"
+                },
+                phone: {
+                    required: "Please enter your whatsapp number",
+                    digits: "Please enter only digits",
+                    minlength: "Your whatsapp number must be at least 10 digits long"
+                },
+                role: "Please select role",
+            },
+            submitHandler: function(form) {
+                // grecaptcha.ready(function() {
+                //     grecaptcha.execute(submit._google_captcha, {action: 'submit'}).then(function(token) {
+                //         const formData = $(form).serializeArray();
+                //         const formDataObj = {};
+                //             formData.forEach(item => {
+                //                 formDataObj[item.name] = item.value;
+                //             });
+
+                //         console.log('Form data ready for submission:', formDataObj);
+
+                //         $.ajax({
+                //             url: ajax_auth_object.ajaxurl,
+                //             type: 'POST',
+                //             data: {
+                //                 action: 'ajax_register',
+                //                 ...formDataObj,
+                //                 security: ajax_auth_object.nonce
+                //             },
+                //             success: function(response) {
+                //                 console.log('Success:', response);
+                //                 $('#registerForm')[0].reset();
+                //                 $('#modalThankYou').modal('show');
+                //             },
+                //             error: function(xhr) {
+                //                 console.error('Error:', xhr);
+                //             }
+                //         });
+                //     });
+                // });
+
+                    let formData = new FormData(form);
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute(submit._google_captcha, {action: 'submit'}).then(function(token) {
+
+                            formData.append('g-recaptcha-response', token);
+                            formData.append('action', '_POST_submit');
+                            formData.append('_ajax_nonce', submit._ajax_nonce_submit);
+                            
+                            $.ajax({
+                                type: 'POST',
+                                url: submit._ajax_url_submit,
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                data: formData,
+                                beforeSend: function() {
+                                   $('#submit-register').prop('disabled', true);
+                                   $('#submit-register').text('Processing...');
+                                },
+
+                                enctype: 'multipart/form-data',
+
+                                success: function(result) {	
+                                   if(result.success) {
+                                       $('#resultRegister').html(`<b>Project ID: <span style="color:${result.data.color}">${result.data.project_id}</span></b>`);
+                                       $('#resultProjectName').html(`<b>Thank you for submitting your project to The Steel Architectural Awards 2026.</b> <br>Your submission for ${result.data.project_name} has been received. Please keep the following Submission ID for your reference:`);
+                                       $('#modalThankYou').modal('show');
+                                       if (form && typeof form.reset === 'function') {
+                                           form.reset();
+                                       }
+                                       $(form).find('input[type="file"]').val('');
+                                   } else {
+                                      // Tambahkan alert error dengan Swal
+                                        Swal.fire({
+                                            title: 'Registrasi Gagal',
+                                            text: result.data.message || 'Terjadi kesalahan saat registrasi. Silakan coba lagi.',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+
+
+                                   }    
+                                }
+                            }).done(function() {
+                                $('#submit-register').prop('disabled', false);
+                                $('#submit-register').text('Save'); 
+                            });
+                                
+                        });
+                    });
+
+                
+            }
+        
+        });
+    }
+
+    function updateHandler() {
+        const $form = $('#updateForm');
+        if (!$form.length) {
+            return;
+        }
+
+        $form.validate({
+            ignore: [],
+            rules: {
+                'technical_drawings[]': {
+                    required: true
+                },
+                'supporting_documents[]': {
+                    required: true
+                },
+                'participant_and_work_data[]': {
+                    required: true
+                },
+                'project_summary[]': {
+                    required: true
+                },
+                'statement_letter[]': {
+                    required: true
+                }
+            },
+            messages: {
+                'technical_drawings[]': "Please upload at least one technical drawing",
+                'supporting_documents[]': "Please upload at least one supporting document",
+                'participant_and_work_data[]': "Please upload participant and work data",
+                'project_summary[]': "Please upload a project summary",
+                'statement_letter[]': "Please upload a statement letter"
+            },
+            errorPlacement: function(error, element) {
+                var name = element.attr('name');
+                // For upload groups, show error under the title/label instead of after hidden input.
+                if (
+                    name === 'technical_drawings[]' ||
+                    name === 'supporting_documents[]' ||
+                    name === 'participant_and_work_data[]' ||
+                    name === 'project_summary[]' ||
+                    name === 'statement_letter[]'
+                ) {
+                    var $formCol = $(element).closest('.form-col');
+                    var $label = $formCol.find('.form-label').first();
+                    error.insertAfter($label);
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function(form) {
+                var formData = new FormData(form);
+
+                // Extra guard: ensure each upload group has at least one file
+                var uploadValid = true;
+
+                function ensureUpload(nameSelector, messageKey) {
+                    var $inputs = $(form).find('input[name="' + nameSelector + '"]');
+                    var $formCol = $inputs.closest('.form-col');
+                    if (!$formCol.length) {
+                        // Fallback: find by Dropzone container ID
+                        switch (nameSelector) {
+                            case 'technical_drawings[]':
+                                $formCol = $('#dropzone-init-technical').closest('.form-col');
+                                break;
+                            case 'supporting_documents[]':
+                                $formCol = $('#dropzone-init-supporting').closest('.form-col');
+                                break;
+                            case 'participant_and_work_data[]':
+                                $formCol = $('#dropzone-init-form1').closest('.form-col');
+                                break;
+                            case 'project_summary[]':
+                                $formCol = $('#dropzone-init-form2').closest('.form-col');
+                                break;
+                            case 'statement_letter[]':
+                                $formCol = $('#dropzone-init-form3').closest('.form-col');
+                                break;
+                        }
+                    }
+
+                    var $label = $formCol.find('.form-label').first();
+                    // Remove previous manual error
+                    $formCol.find('.upload-error-message').remove();
+
+                    if ($inputs.length === 0) {
+                        uploadValid = false;
+                        var msgEn = '';
+                        switch (messageKey) {
+                            case 'technical':
+                                msgEn = 'Please upload at least one technical drawing';
+                                break;
+                            case 'supporting':
+                                msgEn = 'Please upload at least one supporting document';
+                                break;
+                            case 'participant':
+                                msgEn = 'Please upload participant and work data';
+                                break;
+                            case 'summary':
+                                msgEn = 'Please upload a project summary';
+                                break;
+                            case 'statement':
+                                msgEn = 'Please upload a statement letter';
+                                break;
+                        }
+                        var msg = msgEn;
+                        $('<p class="message upload-error-message"></p>')
+                            .text(msg)
+                            .insertAfter($label);
+                    }
+                }
+
+                ensureUpload('technical_drawings[]', 'technical');
+                ensureUpload('supporting_documents[]', 'supporting');
+                ensureUpload('participant_and_work_data[]', 'participant');
+                ensureUpload('project_summary[]', 'summary');
+                ensureUpload('statement_letter[]', 'statement');
+
+                if (!uploadValid) {
+                    // Scroll to first error and do NOT hit API
+                    var $firstError = $('.upload-error-message').first();
+                    if ($firstError.length) {
+                        $('html, body').animate({
+                            scrollTop: $firstError.offset().top - 100
+                        }, 400);
+                    }
+                    return false;
+                }
+
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(submit._google_captcha, { action: 'submit' }).then(function(token) {
+                        formData.append('g-recaptcha-response', token);
+                        formData.append('action', '_POST_update');
+                        formData.append('_ajax_nonce', submit._ajax_nonce_submit);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: submit._ajax_url_submit,
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            data: formData,
+                            beforeSend: function() {
+                                $('#submit-register').prop('disabled', true);
+                                $('#submit-register').text('Processing...');
+                            },
+                            enctype: 'multipart/form-data',
+                            success: function(result) {
+                                if (result && result.success) {
+                                    var $modal = $('#modalThankYouUpdate');
+                                    if ($modal.length) {
+                                        $modal.modal('show');
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: language === 'id' ? 'Perubahan tersimpan' : 'Changes saved',
+                                            text: language === 'id'
+                                                ? 'Data submission Anda berhasil diperbarui.'
+                                                : 'Your submission has been updated successfully.'
+                                        });
+                                    }
+                                } else {
+                                    var message = result && result.data && result.data.message
+                                        ? result.data.message
+                                        : (language === 'id'
+                                            ? 'Terjadi kesalahan saat menyimpan perubahan. Silakan coba lagi.'
+                                            : 'An error occurred while saving changes. Please try again.');
+
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: language === 'id' ? 'Gagal memperbarui' : 'Update failed',
+                                        text: message
+                                    });
+                                }
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: language === 'id' ? 'Gagal memperbarui' : 'Update failed',
+                                    text: language === 'id'
+                                        ? 'Terjadi kesalahan pada server.'
+                                        : 'A server error occurred.'
+                                });
+                            }
+                        }).always(function() {
+                            $('#submit-register').prop('disabled', false);
+                            $('#submit-register').text(language === 'id' ? 'Simpan Perubahan' : 'Save Changes');
+                        });
+                    });
+                });
+            }
+        });
+    }
+
+    function forgotHandler() {
+    $('#reset-form').on('submit', function(e){
+        e.preventDefault();
+        var email = $(this).find('input[name="email"]').val();
+
+        $.ajax({
+            url: ajax_auth_object.ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'colorbond_reset_password',
+                user_login: email
+            },
+            beforeSend: function() {
+                // disable tombol sebelum request dikirim
+                $('#reset-button').prop('disabled', true);
+            },
+            success: function(response){
+                $('#forgotModal').modal('hide');
+                if(response.success){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Link Reset Berhasil Dikirim',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan',
+                        text: response.message
+                    });
+                }
+            },
+            error: function(){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Terjadi kesalahan pada server.'
+                });
+            },
+            complete: function() {
+               $('#reset-button').prop('disabled', false);
+            }
+        });
+    });
+}
+
+    function resetPassword() {
+
+         $('.toggle-password').on('click', function(){
+            var input = $('#reset_password');
+            var icon  = $(this).find('i');
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.addClass('active'); // optional: ubah style icon
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('active');
+            }
+        });
+
+         $('.toggle-password-confirm').on('click', function(){
+            var input = $('#confirm_password');
+            var icon  = $(this).find('i');
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.addClass('active'); // optional: ubah style icon
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('active');
+            }
+        });
+
+
+        $('#resetPass').validate({
+            rules: {
+            
+                reset_password: {
+                    required: true,
+                    minlength: 6
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: "#reset_password"
+                },     
+            },
+            messages: {
+                password_reset: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 6 characters long"
+                },
+                confirm_password: {
+                    required: "Please confirm your password",
+                    equalTo: "Passwords do not match"
+                },
+            },
+            submitHandler: function() {
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(submit._google_captcha, {action: 'submit'}).then(function() {
+                        const data = {
+                            action: 'colorbond_do_reset_password',
+                            login: $('input[name="login"]').val(),
+                            reset_key: $('input[name="reset_key"]').val(),
+                            new_password:$('#reset_password').val(),
+                        };
+
+                        $.post(ajax_auth_object.ajaxurl, data, function(response){
+                            if(response.success){
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Password berhasil direset',
+                                    text: response.message,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                   window.location.href = window.location.pathname;
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: response.message
+                                });
+                            }
+                        });
+                    });
+                });
+            }
+        
+        });
+    }
+
+    function deleteSubmissionHandler() {
+        // When user clicks "Delete" button on a card, store its ID into the hidden input in the modal.
+        jQuery(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+            var submissionId = jQuery(this).data('submission-id');
+            if (submissionId) {
+                jQuery('#delete-submission-id').val(submissionId);
+            }
+        });
+
+        // When user confirms deletion in the modal, call the AJAX API and then redirect/reload.
+        jQuery(document).on('click', '.submit-delete', function(e) {
+            e.preventDefault();
+            var submissionId = jQuery('#delete-submission-id').val();
+
+            if (!submissionId) {
+                return;
+            }
+
+            jQuery.ajax({
+                type: 'POST',
+                url: submit._ajax_url_submit,
+                data: {
+                    action: '_POST_delete',
+                    _ajax_nonce: submit._ajax_nonce_submit,
+                    submission_id: submissionId
+                },
+                success: function(result) {
+                    if (result && result.success) {
+                        // Close modal then reload page to refresh list.
+                        jQuery('#modalDelete').modal('hide');
+                        window.location.reload();
+                    } else {
+                        var message = result && result.data && result.data.message
+                            ? result.data.message
+                            : 'Failed to delete submission. Please try again.';
+
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Delete failed',
+                                text: message
+                            });
+                        } else {
+                            alert(message);
+                        }
+                    }
+                },
+                error: function() {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Delete failed',
+                            text: 'A server error occurred.'
+                        });
+                    } else {
+                        alert('A server error occurred.');
+                    }
+                }
+            });
+        });
+    }
+
+    function init() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.has('reset_key')){
+            // isi hidden field dulu
+            $('input[name="reset_key"]').val(urlParams.get('reset_key'));
+            $('input[name="login"]').val(urlParams.get('login'));
+
+            // cek ke server apakah key valid
+            jQuery.post(ajax_auth_object.ajaxurl, {
+                action: 'custom_check_reset_key',
+                reset_key: urlParams.get('reset_key'),
+                login: urlParams.get('login')
+            }, function(response){
+                if(response.success){
+                    // hanya show modal kalau key valid
+                    $('#modalResetPassword').modal('show');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Link reset tidak valid',
+                        text: response.message
+                    });
+                }
+            });
+        }
+    }
+     
+    jQuery(document).ready(function($) {
+        init();
+        resetPassword();
+        loginHandler();
+        registerHandler();
+        updateHandler();
+        logoutHandler();
+        forgotHandler();
+        deleteSubmissionHandler();
+    });
+    
+
+}( jQuery ) );
