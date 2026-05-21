@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<title>Interior Design Registration — iD Awards 2026</title>
+<meta content="Submit your interior design project for the iD Awards 2026." name="description"/>
+<link href="https://steelarchitecturalaward.com/wp-content/uploads/2026/03/cropped-SAA-icon-32x32.png" rel="icon" sizes="32x32"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/style.min.css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/dropzone.min.css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/style.css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/bootstrap.min.css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/select2.css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/style(1).css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/bootstrap-datepicker.min.css" media="all" rel="stylesheet"/>
+<link href="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/custom.css" media="all" rel="stylesheet"/>
+<style>
+  .reg-page { background: #fafafa; min-height: 100vh; }
+  .reg-hero {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 48px 0 36px;
+    text-align: center;
+  }
+  .reg-hero .reg-badge {
+    display: inline-block;
+    background: var(--brand-yellow);
+    color: #1a1a2e;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+  .reg-hero h1 {
+    font-family: var(--mon);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 0 8px;
+    color: #fff;
+  }
+  .reg-hero p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    margin: 0;
+  }
+  .reg-body { padding: 48px 0 80px; }
+  .reg-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+  }
+  .reg-card-title {
+    font-family: var(--mon);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a1a2e;
+    border-bottom: 2px solid #1a1a2e;
+    padding-bottom: 10px;
+    margin-bottom: 28px;
+  }
+  .form-col { margin-bottom: 20px; }
+  .form-label { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; display: block; }
+  .form-label span { color: var(--brand-red); margin-left: 2px; }
+  .form-label .hint { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .form-control {
+    width: 100%; border: 1px solid #d4d4d4; border-radius: 3px;
+    padding: 10px 14px; font-size: 13px; font-family: var(--mon);
+    color: #222; background: #fff; transition: border-color 0.2s;
+  }
+  .form-control:focus { outline: none; border-color: #1a1a2e; box-shadow: 0 0 0 3px rgba(26,26,46,0.08); }
+  /* Category section */
+  .cat-group { margin-bottom: 12px; }
+  .cat-main {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 0;
+  }
+  .cat-main:hover { border-color: #1a1a2e; background: #f7f7fb; }
+  .cat-main input[type="radio"] { margin-top: 3px; flex-shrink: 0; accent-color: #1a1a2e; width: 16px; height: 16px; cursor: pointer; }
+  .cat-main-label { font-size: 13px; font-weight: 700; color: #1a1a1a; line-height: 1.4; cursor: pointer; }
+  .cat-main-label small { display: block; font-weight: 400; color: #666; font-size: 12px; margin-top: 2px; }
+  .cat-sub {
+    display: none;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    padding: 8px 0 4px 44px;
+    background: #fafafa;
+    margin-bottom: 12px;
+  }
+  .cat-sub.show { display: block; }
+  .cat-sub-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 16px 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+  }
+  .cat-sub-item:last-child { border-bottom: none; }
+  .cat-sub-item input[type="radio"] { margin-top: 2px; flex-shrink: 0; accent-color: #1a1a2e; width: 15px; height: 15px; cursor: pointer; }
+  .cat-sub-item label { font-size: 13px; color: #333; line-height: 1.45; cursor: pointer; }
+  /* Team members */
+  .team-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 576px) { .team-row { grid-template-columns: 1fr; } }
+  /* Upload zones */
+  .upload-zone {
+    border: 2px dashed #d0d0d0;
+    border-radius: 4px;
+    background: #f9f9f9;
+    min-height: 140px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    padding: 24px;
+  }
+  .upload-zone:hover { border-color: #1a1a2e; background: #f7f7fb; }
+  .upload-zone .upload-icon { font-size: 32px; color: #bbb; margin-bottom: 10px; }
+  .upload-zone .upload-title { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px; }
+  .upload-zone .upload-hint { font-size: 11px; color: #999; }
+  .upload-zone input[type="file"] { display: none; }
+  /* Reg no field */
+  .reg-no-row { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 32px; }
+  .reg-no-label { font-size: 12px; color: #888; font-style: italic; }
+  /* Submit area */
+  .submit-area { text-align: center; padding-top: 8px; }
+  .btn-register {
+    display: inline-block;
+    background: #1a1a2e;
+    color: #fff !important;
+    font-family: var(--mon);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 56px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-register:hover { background: #0d0d1a; }
+  .btn-register:active { transform: scale(0.98); }
+  /* check items */
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+  .check-item:last-child { border-bottom: none; }
+  .check-item input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; accent-color: #1a1a2e; width: 16px; height: 16px; cursor: pointer; }
+  .check-item label { font-size: 13px; color: #333; line-height: 1.5; cursor: pointer; }
+  @media (max-width: 768px) { .reg-card { padding: 24px 20px; } .reg-hero h1 { font-size: 22px; } }
+</style>
+<script src="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/jquery.min.js.download"></script>
+<script src="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/jquery-migrate.min.js.download"></script>
+</head>
+<body class="page-template-default page themes-2026 reg-page">
+
+<!-- NAVBAR -->
+<header class="id-header" id="mainHeader">
+  <div class="id-inner">
+    <div class="id-logo-abs">
+      <a href="https://steelarchitecturalaward.com/en/" class="id-logo-link" title="Indonesia Design">
+        <img src="https://res.cloudinary.com/indonesiadesign/image/upload/f_auto,fl_progressive,h_50,q_auto:best/Logo-iD.png" alt="Indonesia Design" class="id-logo-img"/>
+      </a>
+    </div>
+    <div class="id-hbar">
+      <div class="id-hbar-left">
+        <button class="id-hbtn" aria-label="menu" id="idHamburger" type="button">
+          <svg class="id-ico-menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 101">
+            <line x1="5" y1="5" x2="125" y2="5" fill="none" stroke="#171717" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+            <line x1="5" y1="50.5" x2="125" y2="50.5" fill="none" stroke="#171717" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+            <line x1="5" y1="96" x2="125" y2="96" fill="none" stroke="#171717" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+          </svg>
+        </button>
+        <button class="id-hbtn" aria-label="search" type="button">
+          <svg class="id-ico-search" xmlns="http://www.w3.org/2000/svg" viewBox="20 26 64 51">
+            <path d="M80.2,75.9L69,64.8c8.5-10.6,7.7-26.2-2-35.9C61.9,23.8,55.2,21,48,21c-7.2,0-14,2.8-19.1,7.9C23.8,34,21,40.7,21,48 s2.8,14,7.9,19.1C34,72.1,40.7,75,48,75c6.1,0,12.1-2.1,16.8-5.9l11.1,11.1c0.6,0.6,1.3,0.9,2.1,0.9s1.6-0.3,2.1-0.9 C81.3,79,81.3,77.1,80.2,75.9z M69,48c0,5.6-2.2,10.9-6.2,14.8S53.6,69,48,69c-5.6,0-10.9-2.2-14.8-6.2S27,53.6,27,48 c0-5.6,2.2-10.9,6.2-14.8S42.3,27,48,27c5.6,0,10.9,2.2,14.8,6.2S69,42.3,69,48z" fill="#171717"/>
+          </svg>
+        </button>
+      </div>
+      <div class="id-hbar-right">
+        <a href="https://indonesiadesign.com/catalogs" class="id-sub-link" target="_blank" title="subscribe">
+          <div class="id-sub-txt">
+            <span class="id-sub-top">CLICK HERE</span>
+            <span class="id-sub-btm">for our digital version</span>
+          </div>
+          <div class="id-sub-cover">
+            <img src="https://res.cloudinary.com/indonesiadesign/image/upload/f_auto,fl_progressive,h_70,w_auto/HAL-01-COVER-iD108-0409_page-0001--1-.jpg" alt="iD Magazine" class="id-sub-img"/>
+          </div>
+        </a>
+      </div>
+    </div>
+    <nav class="id-navbar" id="idNavMain">
+      <a class="id-nav-link" href="https://indonesiadesign.com/tag/architecture-interior/"><span class="id-nav-span">Architecture / Interior</span></a>
+      <a class="id-nav-link" href="https://indonesiadesign.com/tag/art-design/"><span class="id-nav-span">Art / Product</span></a>
+      <a class="id-nav-link" href="https://indonesiadesign.com/tag/lifestyle/"><span class="id-nav-span">Lifestyle</span></a>
+      <a class="id-nav-link" href="https://indonesiadesign.com/tag/dialogues/"><span class="id-nav-span">Dialogues</span></a>
+      <a class="id-nav-link" href="https://indonesiadesign.com/tag/videos/"><span class="id-nav-span">Videos</span></a>
+      <a class="id-nav-link" href="https://indonesiadesign.com/tag/events/"><span class="id-nav-span">Events</span></a>
+    </nav>
+  </div>
+</header>
+<script>
+(function(){
+  var btn = document.getElementById('idHamburger');
+  var nav = document.getElementById('idNavMain');
+  if (btn && nav) btn.addEventListener('click', function(){ nav.classList.toggle('id-nav-open'); });
+})();
+</script>
+
+<!-- HERO -->
+<div class="reg-hero">
+  <div class="reg-badge">Interior Design</div>
+  <h1>PROJECT SUBMISSION FORM</h1>
+  <p>iD Awards 2026</p>
+</div>
+
+<!-- FORM BODY -->
+<div class="reg-body">
+  <div class="container-sm">
+
+    <form id="registerIntForm" novalidate>
+
+      <!-- Reg No -->
+      <div class="reg-no-row">
+        <span class="reg-no-label">Registration No. : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (for official use only)</span>
+      </div>
+
+      <!-- 1. DESIGNER INFORMATION -->
+      <div class="reg-card">
+        <div class="reg-card-title">1. Designer Information</div>
+
+        <div class="form-col">
+          <label class="form-label">Name of Designer (personal / team) <span>*</span></label>
+          <input class="form-control" name="designer_name" placeholder="Full name or team name" required type="text"/>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Address <span>*</span></label>
+          <textarea class="form-control" name="designer_address" placeholder="Full address" required rows="3"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-col">
+              <label class="form-label">Phone No.</label>
+              <input class="form-control" name="phone" placeholder="Office / landline number" type="tel"/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-col">
+              <label class="form-label">Mobile No. <span>*</span></label>
+              <input class="form-control" name="mobile" placeholder="Mobile / WhatsApp number" required type="tel"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Email <span>*</span></label>
+          <input class="form-control" name="email" placeholder="Your email address" required type="email"/>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Team Members <span class="hint">(if any — up to 4 members)</span></label>
+          <div class="team-row">
+            <input class="form-control" name="team_member_1" placeholder="Team member 1" type="text"/>
+            <input class="form-control" name="team_member_2" placeholder="Team member 2" type="text"/>
+            <input class="form-control" name="team_member_3" placeholder="Team member 3" type="text"/>
+            <input class="form-control" name="team_member_4" placeholder="Team member 4" type="text"/>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Curriculum Vitae <span>*</span>
+            <span class="hint">Size A4, max 3 pages, total file size max 1 MB</span>
+          </label>
+          <div class="upload-zone" id="cvDropzone" onclick="document.getElementById('cvFile').click()">
+            <div class="upload-icon"><i class="fa fa-file-pdf-o"></i></div>
+            <div class="upload-title">Click to upload CV</div>
+            <div class="upload-hint">PDF only &mdash; max 1 MB</div>
+            <input accept=".pdf" id="cvFile" name="cv_file" type="file"/>
+          </div>
+          <div id="cvFileName" style="font-size:12px;color:#666;margin-top:6px;"></div>
+        </div>
+      </div>
+
+      <!-- 2. COMPANY / INSTITUTION -->
+      <div class="reg-card">
+        <div class="reg-card-title">2. Company / Institution Details <span style="font-weight:400;font-size:11px;color:#888;text-transform:none;letter-spacing:0;">(if applicable)</span></div>
+
+        <div class="form-col">
+          <label class="form-label">Company / Institution Name</label>
+          <input class="form-control" name="company_name" placeholder="Company or institution name" type="text"/>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Address</label>
+          <textarea class="form-control" name="company_address" placeholder="Company address" rows="3"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-col">
+              <label class="form-label">Phone No.</label>
+              <input class="form-control" name="company_phone" placeholder="Company phone number" type="tel"/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-col">
+              <label class="form-label">Email</label>
+              <input class="form-control" name="company_email" placeholder="Company email address" type="email"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. CATEGORY -->
+      <div class="reg-card">
+        <div class="reg-card-title">3. Category — Interior Design <span>*</span></div>
+
+        <!-- Commercial Interior -->
+        <div class="cat-group">
+          <label class="cat-main" for="cat_commercial">
+            <input id="cat_commercial" name="category_main" type="radio" value="commercial_interior"/>
+            <span class="cat-main-label">Commercial Interior
+              <small>Select a sub-category below</small>
+            </span>
+          </label>
+          <div class="cat-sub" id="sub_commercial">
+            <div class="cat-sub-item">
+              <input id="sub_office" name="category_sub" type="radio" value="Office space"/>
+              <label for="sub_office">Office space</label>
+            </div>
+            <div class="cat-sub-item">
+              <input id="sub_retail" name="category_sub" type="radio" value="Retail space and mall interiors"/>
+              <label for="sub_retail">Retail space and mall interiors</label>
+            </div>
+            <div class="cat-sub-item">
+              <input id="sub_cultural" name="category_sub" type="radio" value="Cultural centres and public facilities"/>
+              <label for="sub_cultural">Cultural centres and public facilities <small style="color:#888;">(e.g. libraries, concert halls, transport hub, religious buildings, sports &amp; recreation facilities, heritage buildings — adaptive reuse / renovation / revitalisation)</small></label>
+            </div>
+            <div class="cat-sub-item">
+              <input id="sub_hospitality" name="category_sub" type="radio" value="Hospitality"/>
+              <label for="sub_hospitality">Hospitality <small style="color:#888;">(luxury hotels &amp; resorts, restaurants &amp; bars, wellness facilities)</small></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Residential -->
+        <div class="cat-group">
+          <label class="cat-main" for="cat_residential">
+            <input id="cat_residential" name="category_main" type="radio" value="residential"/>
+            <span class="cat-main-label">Residential
+              <small>Select a sub-category below</small>
+            </span>
+          </label>
+          <div class="cat-sub" id="sub_residential">
+            <div class="cat-sub-item">
+              <input id="sub_landed" name="category_sub" type="radio" value="Landed houses"/>
+              <label for="sub_landed">Landed houses</label>
+            </div>
+            <div class="cat-sub-item">
+              <input id="sub_apt" name="category_sub" type="radio" value="Apartment units"/>
+              <label for="sub_apt">Apartment units</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emerging Interior Designers -->
+        <div class="cat-group">
+          <label class="cat-main" for="cat_emerging">
+            <input id="cat_emerging" name="category_main" type="radio" value="emerging"/>
+            <span class="cat-main-label">Emerging Interior Designers
+              <small>Interior designers under 40 years old</small>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. PROJECT INFORMATION -->
+      <div class="reg-card">
+        <div class="reg-card-title">4. Project Information</div>
+
+        <div class="form-col">
+          <label class="form-label">Project Name <span>*</span></label>
+          <input class="form-control" name="project_name" placeholder="Full name of the project" required type="text"/>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Project Address <span>*</span></label>
+          <textarea class="form-control" name="project_address" placeholder="Full address of the project" required rows="3"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-col">
+              <label class="form-label">Year of Completion <span>*</span></label>
+              <input class="form-control" max="2026" min="2000" name="year_completion" placeholder="e.g. 2024" required type="number"/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-col">
+              <label class="form-label">Total Area <span>*</span></label>
+              <input class="form-control" name="total_area" placeholder="e.g. 250 m²" required type="text"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Project Submission <span>*</span>
+            <span class="hint">PDF format, size A3 — max 4 pages, total file size max 8 MB</span>
+          </label>
+          <div class="upload-zone" id="projectDropzone" onclick="document.getElementById('projectFile').click()">
+            <div class="upload-icon"><i class="fa fa-file-image-o"></i></div>
+            <div class="upload-title">Click to upload project PDF</div>
+            <div class="upload-hint">PDF, A3 format &mdash; max 8 MB</div>
+            <input accept=".pdf" id="projectFile" name="project_file" type="file"/>
+          </div>
+          <div id="projectFileName" style="font-size:12px;color:#666;margin-top:6px;"></div>
+        </div>
+      </div>
+
+      <!-- DECLARATION -->
+      <div class="reg-card">
+        <div class="reg-card-title">Declaration</div>
+        <div class="check-item">
+          <input id="declare_original" name="declare_original" required type="checkbox" value="1"/>
+          <label for="declare_original">I declare that all submitted materials are original works and do not infringe any third-party intellectual property rights.</label>
+        </div>
+        <div class="check-item">
+          <input id="declare_accurate" name="declare_accurate" required type="checkbox" value="1"/>
+          <label for="declare_accurate">I confirm that all information provided in this form is accurate and complete to the best of my knowledge.</label>
+        </div>
+        <div class="check-item">
+          <input id="declare_terms" name="declare_terms" required type="checkbox" value="1"/>
+          <label for="declare_terms">I agree to the <a href="https://www.bluescope.com/terms-conditions" target="_blank" style="color:#1a1a2e;">Terms &amp; Conditions</a> and <a href="https://www.bluescope.com/privacy-policy" target="_blank" style="color:#1a1a2e;">Privacy Policy</a> of the iD Awards 2026.</label>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button class="btn-register" type="submit">Submit Registration</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="main-footer spancer-md">
+<div class="container">
+<div class="footer-information">
+<div class="logo-footer">
+<span>BlueScope ASEAN Steel Architectural Awards</span>
+<div class="link-logo">
+<a href="https://www.nsbluescope.com/asean/" style="border-right: 2px solid #ffffff;" target="_blank">
+<img alt="BlueScope" height="52" src="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/logo-footer-bluescope.png" width="200"/>
+</a>
+<a href="https://iai.or.id/" target="_blank">
+<img alt="IAI" height="52" src="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/logo-footer-iai.png" width="200"/>
+</a>
+</div>
+</div>
+<div class="p-xs p-semi" style="color: #ffffff">
+<p>The BlueScope ASEAN Steel Architectural Awards recognizes outstanding architectural achievements using BlueScope steel products across the ASEAN region.</p>
+</div>
+</div>
+<div class="footer-sosmed">
+<div class="sosmed">
+<ul>
+<li><a aria-label="Voices of BlueScope" href="https://www.voicesofbluescope.com/" target="_blank"><i class="icon mic"></i></a></li>
+<li><a aria-label="YouTube" href="https://www.youtube.com/@nsbluescopeindonesia7209" target="_blank"><i class="icon youtube"></i></a></li>
+<li><a aria-label="LinkedIn" href="https://www.linkedin.com/company/steel-supplied-by-bluescope-indonesia/" target="_blank"><i class="icon linked"></i></a></li>
+</ul>
+</div>
+<div class="nav-links">
+<ul>
+<li><a href="https://www.bluescope.com/privacy-policy" target="_blank">Privacy Policy</a></li>
+<li><a href="https://www.bluescope.com/terms-conditions" target="_blank">Terms &amp; Conditions</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="./Homepage - BlueScope ASEAN Steel Architectural Awards_files/bootstrap.bundle.min.js.download"></script>
+<script>
+// Show/hide sub-categories
+document.querySelectorAll('input[name="category_main"]').forEach(function(radio) {
+  radio.addEventListener('change', function() {
+    document.querySelectorAll('.cat-sub').forEach(function(sub) { sub.classList.remove('show'); });
+    document.querySelectorAll('input[name="category_sub"]').forEach(function(r) { r.checked = false; });
+    if (this.value === 'commercial_interior') {
+      document.getElementById('sub_commercial').classList.add('show');
+    } else if (this.value === 'residential') {
+      document.getElementById('sub_residential').classList.add('show');
+    }
+  });
+});
+
+// File input display
+document.getElementById('cvFile').addEventListener('change', function() {
+  var name = this.files[0] ? this.files[0].name : '';
+  document.getElementById('cvFileName').textContent = name ? '✓ ' + name : '';
+});
+document.getElementById('projectFile').addEventListener('change', function() {
+  var name = this.files[0] ? this.files[0].name : '';
+  document.getElementById('projectFileName').textContent = name ? '✓ ' + name : '';
+});
+
+// Upload zone drag styles
+['cvDropzone', 'projectDropzone'].forEach(function(id) {
+  var zone = document.getElementById(id);
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.style.borderColor = '#1a1a2e'; zone.style.background = '#f7f7fb'; });
+  zone.addEventListener('dragleave', function() { zone.style.borderColor = ''; zone.style.background = ''; });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.style.borderColor = ''; zone.style.background = '';
+    var fileInput = zone.querySelector('input[type="file"]');
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      fileInput.dispatchEvent(new Event('change'));
+    }
+  });
+});
+
+// Basic form validation feedback
+document.getElementById('registerIntForm').addEventListener('submit', function(e) {
+  var mainCat = document.querySelector('input[name="category_main"]:checked');
+  if (!mainCat) { e.preventDefault(); alert('Please select a category.'); return; }
+  var needsSub = mainCat.value === 'commercial_interior' || mainCat.value === 'residential';
+  if (needsSub && !document.querySelector('input[name="category_sub"]:checked')) {
+    e.preventDefault(); alert('Please select a sub-category.'); return;
+  }
+});
+</script>
+</body>
+</html>
